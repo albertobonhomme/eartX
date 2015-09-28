@@ -1,0 +1,201 @@
+<div class="container-fluid">
+		<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+  						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-4">
+									<div class="panel panel-default">
+  														<div class="panel-heading">
+  															<h3 class="panel-title">Artwork overview</h3>
+  														</div>
+  														<div class="panel-body">
+  															<div class="text-justify">
+									<%= @artwork.description %>
+									</div>
+  														</div>
+									
+									
+									
+									
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="panel panel-default">
+  														<div class="panel-heading">
+  															<h3 class="panel-title"><%= link_to(@artwork.name, artwork_path(@artwork)) %> (<%= @artwork.year %>), by <%= link_to(@artwork.author.name, author_path(@artwork.author)) %></h3>
+  														</div>
+  														<div class="panel-body image_show_box">
+
+										<img src="<%= @artwork.image_url %>">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-5">
+  											<div class="row">
+  												<div class="col-md-6">
+  													<div class="panel panel-default">
+  														<div class="panel-heading">
+  															<h3 class="panel-title">Financial information</h3>
+  														</div>
+  														<div class="panel-body">
+				  											<p>
+				  												Shares Outstanding: <%= @artwork.outstanding_shares %>
+				  											</p>
+				  											<p>
+				  												Market cap: €254.46mn
+				  											</p>
+				  											<p>
+				  												Today's volume : 2,304 shares
+				  											</p>
+				  											<p>
+				  												Average volume: 1,884 shares
+				  											</p>
+				  										</div>
+				  									</div>
+  												</div>
+  												<div class="col-md-6">
+		  											<div class="panel panel-default">
+		  												<div class="panel-heading">
+  															<h3 class="panel-title">Top Shareholders	        <b>(%)</b></h3>
+  														</div>
+  														<div class="panel-body">
+  															<div class="row">
+  																<div class="col-md-8">
+						  											<p>
+						  												Alberto Bonhomme
+						  											</p>
+						  											<p>
+						  												Juan Palomo
+						  											</p>
+						  											<p>
+						  												John Drun
+						  											</p>
+						  											<p>
+						  												Ray Dalio
+						  											</p>
+				  												</div>
+				  												<div class="col-md-4">
+						  											<p>
+						  												4%
+						  											</p>
+						  											<p>
+						  												3.97%
+						  											</p>
+						  											<p>
+						  												3.94%
+						  											</p>
+						  											<p>
+						  												3.49%
+						  											</p>
+				  												</div>
+				  											</div>
+				  										</div>
+				  									</div>
+  												</div>
+  											</div>
+  											<div class="row">
+  												<div class="col-md-12">
+  													<div class="panel panel-default">
+  														<div class="panel-heading">
+  															<h3 class="panel-title">Place an order</h3>
+  														</div>
+	  														<div class="panel-body">
+	  															<div class="row">
+	  																<div class="col-md-12 align_center">
+	  																	<label>
+    																		<input type="radio" name="opciones" id="opciones_1" value="opcion_1" checked>
+    																		Limited order
+  																		</label>
+  																		<label>
+    																		<input type="radio" name="opciones" id="opciones_1" value="opcion_1">
+    																		Market order
+  																		</label>
+																	</div>
+	  															</div>
+	  															<br>
+	  															<div class="row">
+	  																<div class="col-md-12">
+	  																<%= render "shared/limited_order" %>
+																	</div>
+	  															</div>
+															</div>
+
+  										
+  													</div>
+  												</div>
+  						
+  										</div>
+  										<div class="row">
+											<div class="col-md-6 col-md-offset-3">
+												<div class="panel panel-default">
+													<div class="panel-heading">
+														<h3 class="panel-title">Last price: 25.49€ (+3,45%)</h3>
+													</div>
+												</div>
+											</div>
+  										</div>
+		  											<div class="row">
+		  												<div class="col-md-6">
+			  												<div class="panel panel-default">
+			  													<div class="panel-heading">
+  															<h3 class="panel-title">BID (size)</h3>
+  																</div>
+						  										<div class="panel-body">
+						  											<div class="row">
+		  																<div class="col-md-3 col-md-offset-1">
+								  											<% @bids.each do |bid| %>
+								  											<p>
+								  												<%= bid.price %>
+								  											</p>
+								  											<% end %>
+						  												</div>
+						  												<div class="col-md-7 col-md-offset-1">
+								  											<% @bids.each do |bid| %>
+								  											<p>
+								  												(x<%= bid.shares %>)
+								  											</p>
+								  											<% end %>
+						  												</div>
+						  											</div>
+						  										</div>
+						  									</div>
+					  									</div>
+					  									<div class="col-md-6">
+			  												<div class="panel panel-default">
+			  													<div class="panel-heading">
+  																	<h3 class="panel-title">OFFER (size)</h3>
+  																</div>
+						  										<div class="panel-body">
+						  											<div class="row">
+		  																<div class="col-md-3 col-md-offset-1">
+								  											<% @asks.each do |ask| %>
+								  											<p>
+								  												<%= ask.price %>
+								  											</p>
+								  											<% end %>
+						  												</div>
+						  												<div class="col-md-7 col-md-offset-1">
+								  											<% @asks.each do |ask| %>
+								  											<p>
+								  												(x<%= ask.shares %>)
+								  											</p>
+								  											<% end %>
+						  												</div>
+						  											</div>
+						  										</div>
+	
+					  									</div>
+		  											</div>
+		  										</div>
+		  									</div>
+								</div>
+							</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>
+	</div>
+</div>

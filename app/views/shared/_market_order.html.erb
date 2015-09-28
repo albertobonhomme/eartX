@@ -1,0 +1,19 @@
+<%= form_for [@artwork, @order] do |f| %>
+	<div class="row">
+		<div class="col-md-2">
+			<%= f.select :side, ["Buy","Sell"] %>
+			<%= f.hidden_field :status, :value => "Market" %>
+		</div>
+		<div class="col-md-3">
+			<%= f.label :price %>
+			<%= f.number_field :price, max: 10000, min:0 %>
+		</div>
+		<div class="col-md-4">
+			<%= f.label :shares %>
+			<%= f.number_field :shares, max: 1000000, min:0 %>
+		</div>
+		<div class="col-md-1">
+			<%= f.submit "Place order" %>
+		</div>
+	</div>
+<% end %>

@@ -1,0 +1,78 @@
+<div class="container-fluid">
+		<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+  						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-4">
+									<div class="panel panel-default">
+  														<div class="panel-heading">
+  															<h3 class="panel-title">Artwork overview</h3>
+  														</div>
+  														<div class="panel-body">
+  															<div class="text-justify">
+									<%= @artwork.description %>
+									</div>
+  														</div>
+									
+									
+									
+									
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="panel panel-default">
+  														<div class="panel-heading">
+  															<h3 class="panel-title"><%= link_to(@artwork.name, artwork_path(@artwork)) %> (<%= @artwork.year %>), by <%= link_to(@artwork.author.name, author_path(@artwork.author)) %></h3>
+  														</div>
+  														<div class="panel-body image_show_box">
+
+										<img src="<%= @artwork.image_url %>">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-5">
+  											<div class="row">
+  												<div class="col-md-6">
+  													<div class="panel panel-default">
+  														<div class="panel-heading">
+  															<h3 class="panel-title">Financial information</h3>
+  														</div>
+  														<div class="panel-body">
+				  											<p>
+				  												Valuation: €<%= @artwork.outstanding_shares * @artwork.ipo_price / 1000000  %>mn
+				  											</p>
+				  											<p>
+				  												Shares Offered: <%= @artwork.outstanding_shares %>
+				  											</p>
+				  										</div>
+				  									</div>
+  												</div>
+  					
+  												<div class="col-md-6">
+  													<div class="panel panel-default">
+  														<div class="panel-heading">
+  															<h3 class="panel-title">Place an order</h3>
+  														</div>
+	  														<div class="panel-body">
+	  															<div class="row">
+	  																<div class="col-md-12">
+	  																<%= render "shared/offering_order" %>
+																	</div>
+	  															</div>
+															</div>
+  												</div>
+  						
+  										</div>
+  						
+		  									</div>
+								</div>
+							</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>
+	</div>
+</div>

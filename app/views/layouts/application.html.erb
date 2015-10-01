@@ -4,18 +4,12 @@
   <title>EartX</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag "http://www.google.com/jsapi", "chartkick" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-<div id="top_bar">
-  <% if user_signed_in? %>
-    <p><%= link_to 'Sign out', destroy_user_session_path, method: 'DELETE' %></p>
-  <% else %>
-    <p>
-      <%= link_to 'Sign_up', new_user_registration_path %> | 
-      <%= link_to 'Sign_in', new_user_session_path %>
-    </p>
-  <% end %>
+  <div>
+<%= render "shared/navbar" %>
 </div>
 <%= yield %>
 

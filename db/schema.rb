@@ -24,7 +24,8 @@ ActiveRecord::Schema.define(version: 20150928073401) do
     t.integer  "outstanding_shares"
     t.string   "image_url"
     t.string   "status"
-    t.integer  "ipo_price"
+    t.float    "ipo_price"
+    t.float    "last_price"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
   end
@@ -43,12 +44,13 @@ ActiveRecord::Schema.define(version: 20150928073401) do
 
   create_table "orders", force: :cascade do |t|
     t.string   "side"
-    t.integer  "price"
+    t.float    "price"
     t.integer  "artwork_id"
     t.integer  "user_id"
     t.datetime "expiration_date"
     t.integer  "shares"
     t.string   "status"
+    t.float    "execution_price"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
@@ -58,7 +60,7 @@ ActiveRecord::Schema.define(version: 20150928073401) do
 
   create_table "tickets", force: :cascade do |t|
     t.integer  "artwork_id"
-    t.integer  "price"
+    t.float    "price"
     t.integer  "shares"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -70,18 +72,19 @@ ActiveRecord::Schema.define(version: 20150928073401) do
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",  null: false
+    t.string   "encrypted_password",     default: "",  null: false
+    t.float    "balance",                default: 0.0
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,   null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

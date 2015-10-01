@@ -1,10 +1,8 @@
 <div class="container-fluid">
 		<div class="row">
 				<div class="col-md-12">
-					<div class="panel panel-default">
-  						<div class="panel-body">
 							<div class="row">
-								<div class="col-md-4">
+								<div class="col-md-3">
 									<div class="panel panel-default">
   														<div class="panel-heading">
   															<h3 class="panel-title">Artwork overview</h3>
@@ -31,7 +29,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-md-5">
+								<div class="col-md-6">
   											<div class="row">
   												<div class="col-md-6">
   													<div class="panel panel-default">
@@ -43,10 +41,10 @@
 				  												Shares Outstanding: <%= @artwork.outstanding_shares %>
 				  											</p>
 				  											<p>
-				  												Market cap: €254.46mn
+				  												Market cap: €<%= (@artwork.outstanding_shares * @artwork.last_price / 1000000).round(2) %>mn
 				  											</p>
 				  											<p>
-				  												Today's volume : 2,304 shares
+				  												Today's volume : <%= @artwork.day_volume %> shares
 				  											</p>
 				  											<p>
 				  												Average volume: 1,884 shares
@@ -57,38 +55,15 @@
   												<div class="col-md-6">
 		  											<div class="panel panel-default">
 		  												<div class="panel-heading">
-  															<h3 class="panel-title">Top Shareholders	        <b>(%)</b></h3>
+  															<h3 class="panel-title">Chart</h3>
   														</div>
   														<div class="panel-body">
   															<div class="row">
-  																<div class="col-md-8">
-						  											<p>
-						  												Alberto Bonhomme
-						  											</p>
-						  											<p>
-						  												Juan Palomo
-						  											</p>
-						  											<p>
-						  												John Drun
-						  											</p>
-						  											<p>
-						  												Ray Dalio
-						  											</p>
-				  												</div>
-				  												<div class="col-md-4">
-						  											<p>
-						  												4%
-						  											</p>
-						  											<p>
-						  												3.97%
-						  											</p>
-						  											<p>
-						  												3.94%
-						  											</p>
-						  											<p>
-						  												3.49%
-						  											</p>
-				  												</div>
+  																													<div class="row">
+  <div class="col-md-12">
+    <%= area_chart @artwork.tickets.group_by_hour(:created_at).maximum(:price) %>
+  </div>
+</div>
 				  											</div>
 				  										</div>
 				  									</div>
@@ -127,16 +102,31 @@
   						
   										</div>
   										<div class="row">
-											<div class="col-md-6 col-md-offset-3">
+											<div class="col-md-12">
 												<div class="panel panel-default">
-													<div class="panel-heading">
-														<h3 class="panel-title">Last price: 25.49€ (+3,45%)</h3>
+														<div class="panel-heading">
+														<div class="row">
+															<div class="col-md-6">
+																Last price: <%= @artwork.last_price.round(2) %>€ (<%= @artwork.percentage_change_since_ipo.round(2) %>%)
+															</div>
+															<% if @artwork.max_day.first != nil %>
+																<div class="col-md-2">
+																Open: <%= @artwork.ipo_price.round(2) %>€ 
+																</div>
+																<div class="col-md-2">
+																Max: <%= @artwork.max_day.first.price.round(2) %>€ 
+																</div>
+																<div class="col-md-2">
+																Min: <%= @artwork.min_day.first.price.round(2) %>€ 
+																</div>
+															<% end %>
+														</div>
 													</div>
 												</div>
 											</div>
   										</div>
 		  											<div class="row">
-		  												<div class="col-md-6">
+		  												<div class="col-md-3">
 			  												<div class="panel panel-default">
 			  													<div class="panel-heading">
   															<h3 class="panel-title">BID (size)</h3>
@@ -144,24 +134,24 @@
 						  										<div class="panel-body">
 						  											<div class="row">
 		  																<div class="col-md-3 col-md-offset-1">
-								  											<% @bids.each do |bid| %>
-								  											<p>
-								  												<%= bid.price %>
-								  											</p>
-								  											<% end %>
+									  											<% @artwork.get_3_bids.each do |bid| %>
+									  											<p>
+									  												<%= bid %>
+									  											</p>
+									  											<% end %>
 						  												</div>
 						  												<div class="col-md-7 col-md-offset-1">
-								  											<% @bids.each do |bid| %>
-								  											<p>
-								  												(x<%= bid.shares %>)
-								  											</p>
-								  											<% end %>
+									  											<% @artwork.count_bid_shares.each do |shares| %>
+									  											<p>
+									  												(x<%= shares %>)
+									  											</p>
+									  											<% end %>
 						  												</div>
 						  											</div>
 						  										</div>
 						  									</div>
 					  									</div>
-					  									<div class="col-md-6">
+					  									<div class="col-md-3">
 			  												<div class="panel panel-default">
 			  													<div class="panel-heading">
   																	<h3 class="panel-title">OFFER (size)</h3>
@@ -169,29 +159,59 @@
 						  										<div class="panel-body">
 						  											<div class="row">
 		  																<div class="col-md-3 col-md-offset-1">
-								  											<% @asks.each do |ask| %>
+										  											<% @artwork.get_3_offers.each do |offer| %>
+										  											<p>
+										  												<%= offer %>
+										  											</p>
+										  											<% end %>
+						  												</div>
+						  												<div class="col-md-7 col-md-offset-1">
+									  											<% @artwork.count_offer_shares.each do |shares| %>
+									  											<p>
+									  												(x<%= shares %>)
+									  											</p>
+									  											<% end %>
+						  												</div>
+						  											</div>
+						  										</div>
+					  										</div>
+		  												</div>
+		  												<div class="col-md-6">
+			  												<div class="panel panel-default">
+			  													<div class="panel-heading">
+  																	<h3 class="panel-title">Last transactions</h3>
+  																</div>
+						  										<div class="panel-body">
+						  											<div class="row">
+		  																<div class="col-md-3 col-md-offset-1">
+								  											<% @tickets.each do |ticket| %>
 								  											<p>
-								  												<%= ask.price %>
+								  												<%= ticket.price %>
 								  											</p>
 								  											<% end %>
 						  												</div>
-						  												<div class="col-md-7 col-md-offset-1">
-								  											<% @asks.each do |ask| %>
+						  												<div class="col-md-3">
+								  											<% @tickets.each do |ticket| %>
 								  											<p>
-								  												(x<%= ask.shares %>)
+								  												(x<%= ticket.shares %>)
+								  											</p>
+								  											<% end %>
+						  												</div>
+						  												<div class="col-md-3 ">
+								  											<% @tickets.each do |ticket| %>
+								  											<p>
+								  												<%= ticket.created_at.strftime("%T") %>
 								  											</p>
 								  											<% end %>
 						  												</div>
 						  											</div>
 						  										</div>
-	
-					  									</div>
+					  										</div>
+		  												</div>
 		  											</div>
-		  										</div>
 		  									</div>
 								</div>
-							</div>
-								</div>
+
 							</div>
 						</div>
 					</div>
@@ -199,3 +219,6 @@
 		</div>
 	</div>
 </div>
+
+
+

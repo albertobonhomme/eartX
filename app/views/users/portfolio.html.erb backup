@@ -1,0 +1,78 @@
+<div class="container-fluid">
+		<div class="row">
+			<%= render "shared/leftmenu" %>
+			<div class="col-md-10">
+				<div class="panel panel-default">
+						<div class="panel-heading">
+	  						<h3 class="panel-title">Your portfolio
+	  						</h3>
+  						</div>
+				<div class="row">
+					<div class="col-md-3 align_center">
+						Artwork
+					</div>
+					<div class="col-md-1 align_center">
+						Shares
+					</div>
+					<div class="col-md-2 align_center">
+						Historic price
+					</div>
+					<div class="col-md-1 align_center">
+						Last price
+					</div>
+					<div class="col-md-2 align_center">
+						Profit/Loss
+					</div>
+					<div class="col-md-1 align_center">
+						Return
+					</div>
+				</div>
+				<% current_user.buyers.each do |ticket| %>
+				<div class="row">
+						<div class="col-md-3 align_center">
+							<%= link_to(ticket.artwork.name, artwork_path(ticket.artwork)) %>
+						</div>
+						<div class="col-md-1 align_center">
+							<%= ticket.shares %>
+						</div>
+						<div class="col-md-2 align_center">
+							<%= ticket.price %>€
+						</div>
+						<div class="col-md-1 align_center">
+							<%= ticket.artwork.last_price %>€
+						</div>
+						<div class="col-md-2 align_center">
+							<%= (ticket.artwork.last_price - ticket.price)*ticket.shares %>€
+						</div>
+						<div class="col-md-1 align_center">
+							<%= ((ticket.artwork.last_price - ticket.price)/ticket.price).round(2)*100 %>%
+						</div>
+					</div>	
+					<% end %>
+				<% current_user.sellers.each do |ticket| %>
+				<div class="row">
+						<div class="col-md-3 align_center">
+							<%= link_to(ticket.artwork.name, artwork_path(ticket.artwork)) %>
+						</div>
+						<div class="col-md-1 align_center">
+							-<%= ticket.shares %>
+						</div>
+						<div class="col-md-2 align_center">
+							<%= ticket.price %>€
+						</div>
+						<div class="col-md-1 align_center">
+							<%= ticket.artwork.last_price %>€
+						</div>
+						<div class="col-md-2 align_center">
+							<%= (ticket.artwork.last_price - ticket.price)*ticket.shares %>€
+						</div>
+						<div class="col-md-1 align_center">
+							<%= ((ticket.artwork.last_price - ticket.price)/ticket.price).round(2)*100 %>%
+						</div>
+					</div>	
+					<% end %>
+				</div>
+					</div>
+				</div>
+		</div>
+</div>

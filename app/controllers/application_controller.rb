@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
 before_action :configure_permitted_parameters, if: :devise_controller?
+before_filter :base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
 unless Rails.env.development?
@@ -10,5 +11,13 @@ end
 protected
     def configure_permitted_parameters
       devise_parameter_sanitizer.for(:sign_up) << :name
+    end
+
+
+    def base
+        @offerings = Artwork.offering
+        @allartworks = Artwork.trading
+        @authors = Author.all
+        @tickets = Ticket.all
     end
 end

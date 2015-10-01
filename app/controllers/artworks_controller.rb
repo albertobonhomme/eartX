@@ -11,6 +11,8 @@ class ArtworksController < ApplicationController
 
 		@bids = @artwork.bids
 		@asks = @artwork.asks
+
+		@tickets = @artwork.last_tickets
 	end
 
 	def offerings

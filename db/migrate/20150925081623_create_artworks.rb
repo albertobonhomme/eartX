@@ -8,7 +8,8 @@ class CreateArtworks < ActiveRecord::Migration
     	t.integer :outstanding_shares
     	t.string :image_url
       t.string :status
-      t.integer :ipo_price
+      t.float :ipo_price
+      t.float :last_price
 
       t.timestamps null: false
     end

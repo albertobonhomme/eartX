@@ -3,6 +3,13 @@ Rails.application.routes.draw do
 
   get 'offerings', to: 'artworks#offerings'
   get 'profile', to: 'users#profile'
+  get 'profile/portfolio', to: 'users#portfolio'
+  get 'profile/tradingorders', to: 'users#tradingorders'
+  get 'profile/offeringorders', to: 'users#offeringorders'
+  get 'profile/deposit', to: 'users#deposit'
+  get 'profile/withdraw', to: 'users#withdraw'
+  get 'profile/realizedpl', to: 'users#realizedpl'
+
   root to: 'users#profile'
 
   resources :artworks do

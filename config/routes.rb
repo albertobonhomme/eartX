@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get 'profile/deposit', to: 'users#deposit'
   get 'profile/withdraw', to: 'users#withdraw'
   get 'profile/realizedpl', to: 'users#realizedpl'
-
+  
   root to: 'users#profile'
 
   resources :artworks do

@@ -80,4 +80,8 @@ class Order < ActiveRecord::Base
 		end
 	end
 
+	def cancelorder
+		self.update(status: "Canceled")
+	end 
+
 end

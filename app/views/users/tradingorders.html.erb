@@ -3,75 +3,57 @@
 		<%= render "shared/leftmenu" %>
 		<div class="col-md-10">
 			<div class="panel panel-default">
-					<div class="panel-heading">
-	  					<h3 class="panel-title">Your orders
-	  					</h3>
-  					</div>
-				<div class="row">
-					<div class="col-md-1 align_center">
-						<h5>Order</h5>
-					</div>
-					<div class="col-md-1 align_center">
-						<h5>Side</h5>
-					</div>
-					<div class="col-md-2 align_center">
-						<h5>Artwork</h5>
-					</div>
-					<div class="col-md-1 align_center">
-						<h5>Shares</h5>
-					</div>
-					<div class="col-md-1 align_center">
-						<h5>Price</h5>
-					</div>
-					<div class="col-md-2 align_center">
-						<h5>Executed price</h5>
-					</div>
-					<div class="col-md-2 align_center">
-						<h5>Created/Modified</h5>
-					</div>
-					<div class="col-md-2 align_center">
-						<h5>Actions</h5>
-					</div>
-					
+				<div class="panel-heading">
+					<h3 class="panel-title">Your orders
+					</h3>
 				</div>
-				<% current_user.orders.each do |order| %>
+				<table class="table table-striped custab">
+					<thead>
+						<tr>
+							<th class="text-center">Order</th>
+							<th class="text-center">Side</th>
+							<th class="text-center">Artwork</th>
+							<th class="text-center">Shares</th>
+							<th class="text-center">Price</th>
+							<th class="text-center">Executed price</th>
+							<th class="text-center">Created/Modified</th>
+							<th class="text-center">Actions</th>
+						</tr>
+					</thead>
+					<% current_user.orders.each do |order| %>
 					<% if order.artwork.status == "Trading" %>
-					<div class="row">
-						<div class="col-md-1 align_center">
-							<%= order.status %>
-						</div>
-						<div class="col-md-1 align_center">
-							<%= order.side %>
-						</div>
-						<div class="col-md-2 align_center">
-							<%= link_to(order.artwork.name, artwork_path(order.artwork)) %>
-						</div>
-						<div class="col-md-1 align_center">
-							<%= order.shares %>
-						</div>
-						<div class="col-md-1 align_center">
-							<%= order.price %>
-						</div>
-						<div class="col-md-2 align_center">
-							<% if order.execution_price != nil %>
-								<%= order.execution_price %>
+					<tr>
+						<td class="text-center"><% if order.status == "Limit"%>
+							<span class="label label-warning">Pending</span>
+							<% elsif order.status == "Executed" %>
+							<span class="label label-success"><%= order.status %></span>
+							<% elsif order.status == "Canceled" %>
+							<td><span class="label label-important"><%= order.status %></span></td>
 							<% elsif order.status == "Expired" %>
-								Expired
-							<% else %>
-								<%= "Still alive" %>
+							<td><span class="label"><%= order.status %></span></td>
 							<% end %>
-						</div>
-						<div class="col-md-2 align_center">
-							<%= order.updated_at.strftime("%d/%m/%y (%T)") %>
-						</div>
-						<div class="col-md-2 align_center">
-							<% if order.status != ("Executed" || "Canceled") %>
-							<button>Modify</button><button>Cancel</button>
-							<% end %>
-						</div>
-					</div>
+						</td>
+						<td class="text-center"><%= order.side %></td>
+						<td class="text-center"><%= link_to(order.artwork.name, artwork_path(order.artwork)) %></td>
+						<% if order.side == "Buy" %>
+						<td class="text-center">+<%= order.shares %></td>
+						<% elsif order.side == "Sell" %>
+						<td class="text-center">-<%= order.shares %></td>
+						<% end %>
+						
+						<td class="text-center"><%= order.price %>€</td>
+						<td class="text-center"><% if order.execution_price != nil %>
+							<%= order.execution_price %>€
+						<% end %></td>
+						<td class="text-center"><%= order.updated_at.strftime("%d/%m/%y (%T)") %></td>
+						<td class="text-center"><% if order.status != ("Executed" || "Canceled") %>
+							<%= button_to 'Edit', edit_artwork_order_path(order.artwork, order), :class=> "btn btn-info btn-xs", method: :get %>
+							<%= button_to 'Cancel', artwork_order_path(order.artwork, order), :data => { :confirm => 'Confirm?' }, :class=> "btn btn-danger btn-xs",  method: :delete %>
+						<% end %></td>
+					</tr>
 					<% end %>
-				<% end %>
+					<% end %>
+				</table>
 			</div>
 		</div>
 	</div>

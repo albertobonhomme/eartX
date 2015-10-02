@@ -170,3 +170,19 @@ color: white;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5e79ad', endColorstr='#ff49618f', GradientType=0);
 
 }
+
+.custab{
+    border: 1px solid #ccc;
+    padding: 5px;
+    box-shadow: 3px 3px 2px #ccc;
+    transition: 0.5s;
+    }
+.custab:hover{
+    box-shadow: 3px 3px 0px transparent;
+    transition: 0.5s;
+    }
+
+.button_to,
+.button_to div {
+  display: inline;
+}

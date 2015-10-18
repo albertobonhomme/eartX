@@ -1,0 +1,90 @@
+// Place all the styles related to the chats controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.chat_me {
+	background-color: #CDFAB9;
+	box-shadow: 1px 1px 1px 1px lightgrey;
+}
+
+.chat_other {
+	background-color: #D1EEFC;
+	box-shadow: 1px 1px 1px 1px lightgrey;
+}
+
+.chat_format {
+	padding: 4px 10px 4px 10px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+	border-radius: 15px;
+}
+
+.well {
+	height: 100%;
+
+}
+.chatbox {
+    max-height: 65% !important;
+    overflow-y:scroll !important;
+}
+
+.structure{
+	height: 100%;
+}
+
+
+html,body{
+	height: 95% !important ;
+}
+
+.image_chatbox img {
+
+	width: 100%;
+
+ vertical-align: middle;
+  display: inline-block;
+
+}
+
+.image_chatbox{
+	height: 80px;
+		overflow: hidden;
+	  	  position: relative;
+width: 80px;
+text-align:center; /* Align center inline elements */
+  font: 0/0 a;
+
+
+}
+
+.image_chatbox:before {
+  content: ' ';
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
+}
+
+.profile-header-img {
+	  padding: 0px 5px 0px 10px;
+}
+
+.timeago {
+	font-size: 10px;
+	font-weight: bold;
+}
+
+.black {
+	color: black !important;
+}
+
+.msg_left {
+    max-height: 95% !important;
+    overflow-y:scroll !important; 
+}
+
+
+.structure_width {
+  text-align: justify;
+  max-width: 100%;
+  word-wrap:break-word;
+}

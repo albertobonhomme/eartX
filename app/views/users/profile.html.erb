@@ -1,5 +1,121 @@
-<div class="container-fluid">
+<div class="most-active">
+	<div class="container-fluid">
 		<div class="row">
-			<%= render "shared/leftmenu" %>
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h5 class="panel-title text_center">Perfil</h5>
+					</div>
+					<div class="row">
+						<div class="col-md-6 col-md-offset-3">
+							<div class="panel-body">
+								<div class="profile_space">
+									<div class="profile-header-container">
+										<div class="profile-header-img">
+											<img class="img-circle" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" />
+											<div class="rank-label-container">
+												<span class="label label-default rank-label">3.5 <span class="glyphicon glyphicon-star" aria-hidden="true"></span></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="text_center description_field kloz_color">
+								<%= link_to "#{@user.name}", profile_path(@user) %>
+							</div>
+							<div class="text_center">
+								<p>
+									Productos en venta : <%= @user.products_for_sale %>
+								</p>
+								<p>
+									Productos vendidos : <%= @user.products_sold %>
+								</p>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-8">
+				<div class="row">
+					<% @user.products.each do |product| %>
+					<div class="col-md-3">
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<% if (product.user == current_user) && (product.vendido == "No") %>
+								<%= link_to raw("<i class=\"glyphicon glyphicon-remove\"></i>"), product_path(product), :data => { :confirm => '¿Estás seguro de que quieres eliminar el producto?' }, :class=> "cross_to_delete", method: :delete %>
+								<% end %>
+								<div class="image_box">
+									<img class="img-responsive" src="<%= product.image %>" alt="<%= product.name %> (<%= product.brand %>)" data-toggle="modal" data-target="#myModal">
+								</div>
+								<% if product.vendido == "Si" %>
+								<br>
+								<div class="row">
+									<div class="col-md-5 text_right no_padding_right">
+										<span class="glyphicon glyphicon-ok-sign sold_icon" aria-hidden="true"></span>
+									</div>
+									<div class="col-md-7 text_left sold_text_icon">
+										VENDIDO
+									</div>
+								</div>
+								
+								
+								<% end %>
+								<div class="text_center description_field">
+									<% if (Condition.find_by(id: product.condition_id).name == "Usado") %>
+									<span class="status-product label label-default"><%= Condition.find_by(id: product.condition_id).name %></span>
+									<% elsif (Condition.find_by(id: product.condition_id).name) == "Nuevo con etiqueta" %>
+									<span class="status-product label label-success"><%= Condition.find_by(id: product.condition_id).name %></span>
+									<% elsif (Condition.find_by(id: product.condition_id).name) == "Nuevo sin etiqueta" %>
+									<span class="status-product label label-info"><%= Condition.find_by(id: product.condition_id).name %></span>
+									<% end %>
+								</div>
+								<div class="text_center">
+									<b><%= product.brand %></b> | Talla: <b><%= product.size %></b>
+								</div>
+								<div class="margin_bottom text_center">
+									<% if (product.user == current_user) %>
+									<div class="row">
+										<% unless (product.vendido == "Si") %>
+										
+										<div class="col-md-6 no_padding_right">
+											<%= button_to "¡Vendido!",vendido_path(product), :data => { :confirm => '¿Has vendido realmente el producto?' }, :class=> "boton btn btn-success btn-md", method: :post %>
+										</div>
+										<div class="col-md-6 no_padding_left">
+											<%= button_to "#{product.price}€",product_path(product), :class=> "boton btn btn-success btn-outline text_bold", method: :get %>
+										</div>
+										<% end %>
+											<div class="col-md-12">
+											<%= button_to "Ver detalle",product_path(product), :class=> "boton btn btn-warning btn-md margin", method: :get %>
+											</div>
+									</div>
+									<% elsif (product.user != current_user) && (product.vendido == "No") %>
+									<div class="row">
+										<div class="col-md-6 no_padding_right">
+											<%= button_to "Ver más",product_path(product), :class=> "boton btn btn-warning btn-outline text_bold", method: :get %>
+										</div>
+										<div class="col-md-6 no_padding_left">
+											<% if (Chat.find_by(buyer_id: current_user.id, seller_id: product.user.id, product_id: product)) %>
+											<%= button_to "#{product.price}€",product_chat_path(product, (Chat.find_by(buyer_id: current_user, seller_id: product.user, product_id: product))), :class=> "boton btn btn-success btn-outline text_bold", method: :get %>
+											<% else %>
+											<%= button_to "#{product.price}€",new_product_chat_path(product), :class=> "boton btn btn-success btn-outline text_bold", method: :get %>
+											<% end %>
+										</div>
+									</div>
+									<% end %>
+								</div>
+							</div>
+						</div>
+					</div>
+					<% end %>
+					
+				</div>
+			</div>
 		</div>
+	</div>
 </div>

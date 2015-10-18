@@ -3,16 +3,18 @@ class UsersController < ApplicationController
 	before_filter :base
   
   def profile
-    @user = current_user
+    @user = User.find_by(id: params[:user_id])
     render 'users/profile'
   end
   
   private 
   
   def base
-		@offerings = Artwork.offering
-		@allartworks = Artwork.trading
-		@authors = Author.all
+
+    @products_current_user = Product.where(user_id: current_user)
+    @products = Product.all
+    @categories = Category.all
+
   end
 
 end

@@ -1,0 +1,151 @@
+<% if current_user.id == @chat.buyer_id %>
+<% @chat.buyer_new = 0 %>
+<% @chat.save %>
+<% elsif current_user.id == @chat.seller_id %>
+<% @chat.seller_new = 0 %>
+<% @chat.save %>
+<% end %>
+<div class="container-fluid structure">
+	<div class="row structure">
+		<div class="col-md-3 structure">
+<%= render "shared/inbox_bar" %>
+	</div>
+	<div class="col-md-6 structure">
+		<div class="well">
+			<div class="row">
+				<div class="col-md-2">
+					<div class="profile-header-container">
+						<div class="profile-header-img">
+							<img class="img-circle" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" />
+							<div class="rank-label-container">
+								<span class="label label-default rank-label">3.5 <span class="glyphicon glyphicon-star" aria-hidden="true"></span></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<% if current_user.id == @chat.seller_id %>
+					<%= User.find_by(id: @chat.buyer_id).name %>
+					<% elsif current_user.id == @chat.buyer_id %>
+					<%= User.find_by(id: @chat.seller_id).name %>
+					<% end %>
+				</div>
+			</div>
+			<hr data-brackets-id="12673">
+			<ul data-brackets-id="12674" id="sortable" class="list-unstyled ui-sortable chatbox">
+				<% if @chat.messages != nil %>
+				<% @chat.messages.each do |message| %>
+				<div class="row">
+					<% if message.user == current_user %>
+					<div class="col-md-12">
+						<small class="pull-right text-muted chat_format">
+						<span class="glyphicon glyphicon-time"></span> hace
+						<% if message.time_ago[:days] == 0 && message.time_ago[:hours] == 0 %>
+						<%= message.time_ago[:minutes] %> minutos
+						<% elsif message.time_ago[:days] == 0 %>
+						<%= message.time_ago[:hours] %> horas
+						<% elsif message.time_ago[:days] != 0 %>
+						<%= message.time_ago[:days] %> días
+						<% end %>
+						</small>
+						<li class="pull-right chat_me chat_format structure_width"><%= message.content %></li>
+					</div>
+					<% else %>
+					<div class="col-md-12">
+						<small class="pull-left text-muted chat_format">
+						<span class="glyphicon glyphicon-time"></span> hace
+						<% if message.time_ago[:days] == 0 && message.time_ago[:hours] == 0 %>
+						<%= message.time_ago[:minutes] %> minutos
+						<% elsif message.time_ago[:days] == 0 %>
+						<%= message.time_ago[:hours] %> horas
+						<% elsif message.time_ago[:days] != 0 %>
+						<%= message.time_ago[:days] %> días
+						<% end %>
+						</small>
+						<li class="pull-left chat_other chat_format structure_width"><%= message.content %></li>
+					</div>
+					<% end %>
+				</div>
+				<% end %>
+				<% end %>
+			</ul>
+			<div class="input-group">
+				<%= render "shared/new_message" %>
+			</div>
+		</div>
+	</div>
+					<div class="col-md-3">
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<% if (@product.user == current_user) && (@product.vendido == "No") %>
+								<%= link_to raw("<i class=\"glyphicon glyphicon-remove\"></i>"), product_path(@product), :data => { :confirm => '¿Estás seguro de que quieres eliminar el producto?' }, :class=> "cross_to_delete", method: :delete %>
+								<% end %>
+								<div class="image_box">
+									<img class="img-responsive" src="<%= @product.image %>" alt="<%= @product.name %> (<%= @product.brand %>)" data-toggle="modal" data-target="#myModal">
+								</div>
+								<% if @product.vendido == "Si" %>
+								<br>
+								<div class="row">
+									<div class="col-md-5 text_right no_padding_right">
+										<span class="glyphicon glyphicon-ok-sign sold_icon" aria-hidden="true"></span>
+									</div>
+									<div class="col-md-7 text_left sold_text_icon">
+										VENDIDO
+									</div>
+								</div>
+								
+								
+								<% end %>
+								<div class="text_center description_field">
+									<% if (Condition.find_by(id: @product.condition_id).name) == "Usado" %>
+									<span class="status-product label label-default"><%= Condition.find_by(id: @product.condition_id).name %></span>
+									<% elsif (Condition.find_by(id: @product.condition_id).name) == "Nuevo con etiqueta" %>
+									<span class="status-product label label-success"><%= Condition.find_by(id: @product.condition_id).name %></span>
+									<% elsif (Condition.find_by(id: @product.condition_id).name) == "Nuevo sin etiqueta" %>
+									<span class="status-product label label-info"><%= Condition.find_by(id: @product.condition_id).name %></span>
+									<% end %>
+								</div>
+								<div class="text_center">
+									<b><%= @product.brand %></b> | Talla: <b><%= @product.size %></b>
+								</div>
+								<div class="margin_bottom text_center">
+									<% if (@product.user == current_user) %>
+									<div class="row">
+										<% unless (@product.vendido == "Si") %>
+										
+										<div class="col-md-6 no_padding_right">
+											<%= button_to "¡Vendido!",vendido_path(@product), :data => { :confirm => '¿Has vendido realmente el producto?' }, :class=> "boton btn btn-success btn-md", method: :post %>
+										</div>
+										<div class="col-md-6 no_padding_left">
+											<%= button_to "#{@product.price}€",product_path(@product), :class=> "boton btn btn-success btn-outline text_bold", method: :get %>
+										</div>
+										<% end %>
+											<div class="col-md-12">
+											<%= button_to "Ver detalle",product_path(@product), :class=> "boton btn btn-warning btn-md margin", method: :get %>
+											</div>
+									</div>
+									<% elsif (@product.user != current_user) && (@product.vendido == "No") %>
+									<div class="row">
+										<div class="col-md-6 no_padding_right">
+											<%= button_to "Ver más",product_path(@product), :class=> "boton btn btn-warning btn-outline text_bold", method: :get %>
+										</div>
+										<div class="col-md-6 no_padding_left">
+											<% if (Chat.find_by(buyer_id: current_user.id, seller_id: @product.user.id, product_id: @product)) %>
+											<%= button_to "#{@product.price}€",product_chat_path(@product, (Chat.find_by(buyer_id: current_user, seller_id: @product.user, product_id: @product))), :class=> "boton btn btn-success btn-outline text_bold", method: :get %>
+											<% else %>
+											<%= button_to "#{@product.price}€",new_product_chat_path(@product), :class=> "boton btn btn-success btn-outline text_bold", method: :get %>
+											<% end %>
+										</div>
+									</div>
+									<% end %>
+								</div>
+							</div>
+						</div>
+
+	</div>
+</div>
+</div>
+
+<script>
+$( "ul.chatbox" ).scrollTop( 30000 );
+</script>

@@ -1,0 +1,56 @@
+			<div class="panel panel-default structure">
+				<div class="panel-heading">
+					<h5 class="panel-title text_center">Mensajes</h5>
+				</div>
+				<div class="panel-body msg_left">
+					<br>
+					<% current_user.get_chats.each do |chat| %>
+					<a class="black" style="display:block" href="/products/<%= chat.product.id %>/chats/<%= chat.id %>">
+						<div class="row">
+							<div class="col-md-4 no_padding_right">
+								<div class="profile-header-container">
+									<div class="profile-header-img">
+										<img class="img-circle image_chatbox" src="<%= chat.product.image%>"/>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-8">
+								<b><%= chat.product.name %></b>
+								<br>
+								<%= chat.product.brand %> | <%= chat.product.price %>€ | Talla: <%= chat.product.size %>
+								<br>
+								<% if (Condition.find_by(id: chat.product.condition_id).name == "Usado") %>
+								<span class="status-chat.product label label-default"><%= Condition.find_by(id: chat.product.condition_id).name %></span>
+								<% elsif (Condition.find_by(id: chat.product.condition_id).name == "Nuevo con etiqueta") %>
+								<span class="status-chat.product label label-success"><%= Condition.find_by(id: chat.product.condition_id).name %></span>
+								<% elsif (Condition.find_by(id: chat.product.condition_id).name == "Nuevo sin etiqueta") %>
+
+								<span class="status-chat.product label label-info"><%= Condition.find_by(id: chat.product.condition_id).name %></span>
+								<% end %>
+								<br>
+								<% if ((chat.buyer_id == current_user.id) && (chat.buyer_new == "1"))  %>
+										<span class="status-chat.product label label-danger">¡Mensaje no leído!</span>
+										
+										<% elsif ((chat.seller_id == current_user.id) && (chat.seller_new == "1")) %>
+										<span class="status-chat.product label label-danger">¡Mensaje no leído!</span>
+										<% else %>
+										<span class="glyphicon glyphicon-time timeago"></span><span class="timeago"> Último mensaje hace
+										<% if chat.messages.last.time_ago[:days] == 0 && chat.messages.last.time_ago[:hours] == 0 %>
+										<%= chat.messages.last.time_ago[:minutes] %> minutos
+										<% elsif chat.messages.last.time_ago[:days] == 0 %>
+										<%= chat.messages.last.time_ago[:hours] %> horas
+										<% elsif chat.messages.last.time_ago[:days] != 0 %>
+										<%= chat.messages.last.time_ago[:days] %> días
+										<% end %>
+										<% end %>
+
+
+								
+							</span>
+						</div>
+					</div>
+					<hr>
+				</a>
+				<% end %>
+			</div>
+		</div>

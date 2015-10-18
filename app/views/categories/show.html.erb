@@ -1,0 +1,46 @@
+<div class="most-active">
+	<div class="container-fluid">
+		<div class="row">
+			<% @productsfiltered.each do |product| %>
+			<div class="col-md-2">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title"><%= product.name %>, <%= product.brand %></h3>
+					</div>
+					<div class="panel-body">
+						<div class="image_box">
+							<img class="img-responsive" src="<%= product.image %>" alt="<%= product.name %> (<%= product.brand %>)" data-toggle="modal" data-target="#myModal">
+						</div>
+						<%= button_to 'Buy',product_path(product), :class=> "btn btn-default btn-md", method: :get %>
+					</div>
+				</div>
+			</div>
+			<% end %>
+		</div>
+	</div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title" id="myModalLabel">Im the awesome cat!</h4>
+			</div>
+			<div class="modal-body">
+				<img class="img-responsive" src="http://lorempixel.com/600/400/cats/?42" alt="The awesome description">
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<script>
+	
+$(".image_box img").click(function(event) {
+var src = ($(event.target).attr("src"))
+var alt = ($(event.target).attr("alt"))
+$(".modal-body img").attr("src",src)
+$(".modal-body img").attr("alt",alt)
+$("#myModalLabel").text(alt)
+});
+</script>

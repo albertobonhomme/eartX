@@ -1,21 +1,21 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  get 'offerings', to: 'artworks#offerings'
-  get 'profile', to: 'users#profile'
-  get 'profile/portfolio', to: 'users#portfolio'
-  get 'profile/tradingorders', to: 'users#tradingorders'
-  get 'profile/offeringorders', to: 'users#offeringorders'
-  get 'profile/deposit', to: 'users#deposit'
-  get 'profile/withdraw', to: 'users#withdraw'
-  get 'profile/realizedpl', to: 'users#realizedpl'
-  
-  root to: 'users#profile'
+  root to: 'products#index'
 
-  resources :artworks do
-    resources :orders 
+  get 'profile/:user_id', to: 'users#profile', as: :profile
+  post '/:product_id/update', to: 'products#sold', as: :vendido 
+  get 'inbox', to: 'users#inbox', as: :inbox 
+
+  resources :products do 
+    resources :chats do 
+      resources :messages
+    end
+    resources :comments 
   end
-  resources :authors
+  resources :categories
+
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -1,0 +1,206 @@
+// Place all the styles related to the products controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.image_box img {
+
+	width: 100%;
+
+ vertical-align: middle;
+  display: inline-block;
+
+}
+
+.image_box{
+	height: 200px;
+		overflow: hidden;
+	  	  position: relative;
+width: 100%;
+text-align:center; /* Align center inline elements */
+  font: 0/0 a;
+  border-bottom: 1px solid lightgrey;
+
+}
+
+.imagefull_box img {
+
+	width: 100%;
+ vertical-align: middle;
+  display: inline-block;
+
+}
+
+#image_show {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+
+.imagefull_box{
+	height: 100%;
+		overflow: hidden;
+	  	  position: relative;
+text-align:center; /* Align center inline elements */
+  font: 0/0 a;
+
+}
+
+.image_box:before {
+  content: ' ';
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
+}
+
+.imagefull_box:before {
+  content: ' ';
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
+}
+
+
+.description_field {
+	width: 100%;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 5%;
+	padding-right: 5%;
+}
+
+.boton {
+	width: 90%;
+	margin: 10px 5% 20px 5%;
+}
+
+
+
+.status-product {
+	font-size: 12px !important;
+
+}
+
+
+.panel-body {
+	padding: 0px 0px 0px 0px !important;
+
+}
+
+
+.margin_bottom {
+	margin-bottom: 10px;
+}
+
+li.ui-state-default{
+    background: #fff0;
+    border:none;
+    border-bottom:1px solid #ddd;
+    text-align: left;
+    padding-bottom: 10px;
+}
+
+li.ui-state-default:last-child{
+    border-bottom:none;
+}
+
+@import url(http://fonts.googleapis.com/css?family=Roboto:400);
+body {
+  background-color:#fff;
+  -webkit-font-smoothing: antialiased;
+  font: normal 14px Roboto,arial,sans-serif;
+}
+
+.btn,.form-control,.well {
+    border-radius:1px;
+    box-shadow:0 0 0;
+}
+
+.profile-header-container{
+    margin: 0 auto;
+    text-align: center;
+}
+
+.profile-header-img > img.img-circle {
+    width: 100%;
+    border: 2px solid #4fa5fc;
+}
+
+.profile-header {
+    margin-top: 43px;
+}
+
+/**
+ * Ranking component
+ */
+.rank-label-container {
+    margin-top: -15px;
+    /* z-index: 1000; */
+    text-align: center;
+}
+
+.label.label-default.rank-label {
+    background-color: #4fa5fc;
+    padding: 5px 10px 5px 10px;
+    border-radius: 27px;
+}
+
+.buttons_edit {
+	
+	padding-top: 5px;
+}
+
+.button_addcomment {
+	padding-top: 5px;
+	text-align: right;
+}
+
+.well {
+	background-color: white !important;
+}
+
+.kloz_color {
+	color: #4fa5fc;
+	font-size: 18px;
+}
+
+.profile_space {
+	padding-top: 10px;
+}
+
+.grid_profile img {
+
+	width: 100%;
+
+ vertical-align: middle;
+  display: inline-block;
+
+}
+
+.grid_profile {
+	height: 200px;
+		overflow: hidden;
+	  	  position: relative;
+width: 100%;
+text-align:center; /* Align center inline elements */
+  font: 0/0 a;
+
+}
+
+
+.grid_profile:before {
+  content: ' ';
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
+}
+
+.text_break {
+  word-wrap:break-word;
+}
+
+.form_fitting {
+  padding: 20px 20px 20px 20px !important;
+}
+
+
+

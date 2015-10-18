@@ -1,0 +1,13 @@
+<%= form_for [@product, @chat, @message] do |f| %>
+	<div class="row">
+		<div class="col-md-12">
+			<%= f.hidden_field :user_id, :value => current_user.id %>
+			<%= f.text_area :content, :class => 'form-control', size: "100%x3", :placeholder => 'Escribe aquí tu mensaje...' %>
+		</div>
+	</div>
+<div class="row">
+		<div class="col-md-12 button_addcomment">
+			<%= f.submit 'Enviar', :class => 'btn btn-default btn-sm' %>
+		</div>
+</div>
+<% end %>

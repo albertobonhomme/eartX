@@ -153,3 +153,33 @@ html,body{
     top: 12px;
     cursor:pointer;
 }
+
+html,body{
+    height: 95% !important ;
+}
+
+.structure{
+    height: 100%;
+}
+
+.msg_left {
+    max-height: 95% !important;
+    overflow-y:scroll !important; 
+}
+
+.cross_to_delete {
+font-size: 14px !important;
+    position: absolute;
+    z-index: 100;
+    font-weight: bold !important;
+    right: 15px;
+    top: 5px;
+    width: 22px;
+    height: 22px;
+    color: #DE6C69;
+}
+
+.cross_to_delete:hover{
+    color: #D9534F;
+}
+

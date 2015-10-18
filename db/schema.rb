@@ -11,64 +11,83 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150928073401) do
+ActiveRecord::Schema.define(version: 20151017112954) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "artworks", force: :cascade do |t|
+  create_table "categories", force: :cascade do |t|
     t.string   "name"
-    t.string   "description"
-    t.integer  "author_id"
-    t.integer  "year"
-    t.integer  "outstanding_shares"
-    t.string   "image_url"
-    t.string   "status"
-    t.float    "ipo_price"
-    t.float    "last_price"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-  end
-
-  add_index "artworks", ["author_id"], name: "index_artworks_on_author_id", using: :btree
-
-  create_table "authors", force: :cascade do |t|
-    t.string   "name"
-    t.string   "image_url"
-    t.string   "bio"
-    t.string   "born_in"
-    t.string   "died_in"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "orders", force: :cascade do |t|
-    t.string   "side"
-    t.float    "price"
-    t.integer  "artwork_id"
-    t.integer  "user_id"
-    t.datetime "expiration_date"
-    t.integer  "shares"
-    t.string   "status"
-    t.float    "execution_price"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-  end
-
-  add_index "orders", ["artwork_id"], name: "index_orders_on_artwork_id", using: :btree
-  add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
-
-  create_table "tickets", force: :cascade do |t|
-    t.integer  "artwork_id"
-    t.float    "price"
-    t.integer  "shares"
+  create_table "chats", force: :cascade do |t|
+    t.integer  "product_id"
+    t.string   "buyer_new"
+    t.string   "seller_new"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "buyer_id"
     t.integer  "seller_id"
   end
 
-  add_index "tickets", ["artwork_id"], name: "index_tickets_on_artwork_id", using: :btree
+  add_index "chats", ["product_id"], name: "index_chats_on_product_id", using: :btree
+
+  create_table "comments", force: :cascade do |t|
+    t.string   "content"
+    t.integer  "user_id"
+    t.integer  "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "comments", ["product_id"], name: "index_comments_on_product_id", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+
+  create_table "conditions", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "genders", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.string   "content"
+    t.integer  "user_id"
+    t.integer  "chat_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "messages", ["chat_id"], name: "index_messages_on_chat_id", using: :btree
+  add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
+
+  create_table "products", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "price"
+    t.string   "name"
+    t.string   "brand"
+    t.string   "description"
+    t.string   "image"
+    t.string   "size"
+    t.integer  "condition_id"
+    t.integer  "gender_id"
+    t.string   "vendido",      default: "No"
+    t.integer  "category_id"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree
+  add_index "products", ["condition_id"], name: "index_products_on_condition_id", using: :btree
+  add_index "products", ["gender_id"], name: "index_products_on_gender_id", using: :btree
+  add_index "products", ["user_id"], name: "index_products_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "name"

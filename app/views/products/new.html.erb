@@ -1,0 +1,55 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-10 col-md-offset-1">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h5 class="panel-title text_center">Poner producto a la venta</h5>
+				</div>
+				
+				<div class="panel panel-body form_fitting">
+					<%= form_for @product do |f| %>
+					<div class="row">
+						<div class="col-md-6">
+							
+							<%= f.label "Nombre" %>
+							<%= f.text_field :name, :class => 'form-control', :placeholder => 'Ejemplo: "Camiseta de cuadros". NO incluyas la marca' %>
+							<br>
+							<%= f.label "Marca" %>
+							<%= f.text_field :brand, :class => 'form-control', :placeholder => 'Ejemplo: "Zara"' %>
+							<br>
+							<%= f.label "Precio" %>
+							<%= f.number_field :price, max: 10000, min:0.01, step: 0.01, :class => 'form-control', :placeholder => 'Ejemplo: "12,50"' %>
+							<br>
+							<%= f.label "Talla" %>
+							<%= f.text_field :size, :class => 'form-control', :placeholder => 'Ejemplo: "S"' %>
+							<br>
+							<%= f.label "Género" %>
+							<%= f.collection_select :condition, Gender.all.collect,  :id, :name, {include_blank: "Elige un género"}, :class => 'form-control' %>
+							<br>
+							<%= f.label "Categoría" %>
+							<%= f.collection_select :category_id, Category.all.collect,  :id, :name, {include_blank: "Elige una categoría"}, :class => 'form-control' %>
+							<br>
+							<%= f.label "Estado del producto" %>
+							<%= f.collection_select :condition, Condition.all.collect,  :id, :name, {include_blank: "Elige un estado"}, :class => 'form-control' %>
+							<br>
+						</div>
+						<div class="col-md-6">
+							<%= f.label "Descripción" %>
+							<%= f.text_area :description, :class => 'form-control', :placeholder => 'Ejemplo: "Edición especial para el verano pasado, comprada en rebajas."' %>
+							<br>
+							<%= f.label "Imagen" %>
+							<%= f.file_field :image , :class => 'form-control' %>
+						</div>
+					<div class="row">
+						<div class="col-md-12 button_addcomment">
+							<%= f.submit 'Publicar producto', :class => 'btn btn-default btn-sm' %>
+						</div>
+						</div>
+					
+					</div>
+					<% end %>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
